@@ -1,6 +1,7 @@
 import os
 import io
 import json
+import pandas
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload
@@ -27,3 +28,6 @@ done = False
 while not done:
     status, done = downloader.next_chunk()
     print(f"⬇️ Downloaded {int(status.progress() * 100)}% of data.xlsx")
+    df= pd.read_excel("data.xlsx")
+    for index, item in df.iterrows():
+        print(item["Date"])
