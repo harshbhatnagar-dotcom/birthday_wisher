@@ -30,4 +30,4 @@ jobs:
         env:
           GMAIL: ${{ secrets.GMAIL }}
           GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
-        run: python birthday_wisher.py
+        run: main.py
