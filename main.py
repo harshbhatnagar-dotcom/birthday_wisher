@@ -14,14 +14,14 @@ def send_email(to, subject, message):
             s.login(GMAIL, GMAIL_PASSWORD)
             email_message = f"Subject: {subject}\n\n{message}"
             s.sendmail(GMAIL, to, email_message)
-            print(f"✅ Sent to: {to}")
+            print(f" Sent to: {to}")
     except Exception as e:
-        print(f"❌ Failed to send to {to}. Reason: {e}")
+        print(f" Failed to send to {to}. Reason: {e}")
 
 try:
     df = pd.read_excel("data.xlsx")
 except Exception as e:
-    print(f"❌ Failed to read data.xlsx: {e}")
+    print(f" Failed to read data.xlsx: {e}")
     exit()
 
 today = datetime.datetime.now().strftime("%d/%m")
@@ -33,7 +33,7 @@ for _, item in df.iterrows():
     try:
         bday = item["Date"].strftime("%d/%m")
         if today == bday:
-            message = item.get("Message", "Wishing you a wonderful birthday! 🎉")
-            send_email(item["gmail"], "🎉 Happy Birthday!", message)
+            message = item.get("Message", "Wishing you a wonderful birthday! ")
+            send_email(item["gmail"], " Happy Birthday!", message)
     except Exception as e:
-        print(f"⚠️ Error processing row: {e}")
+        print(f" Error processing row: {e}")
