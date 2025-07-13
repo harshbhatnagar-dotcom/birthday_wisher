@@ -1,0 +1,33 @@
+name: Send Birthday Emails
+
+on:
+  schedule:
+    - cron: '30 18 * * *'  # 12:00 AM IST (UTC+5:30 = 18:30 UTC)
+  workflow_dispatch:
+
+jobs:
+  send-emails:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Download data.xlsx from Google Drive
+        env:
+          GDRIVE_KEY: ${{ secrets.GDRIVE_KEY }}
+        run: python download_file.py
+
+      - name: Send Birthday Emails
+        env:
+          GMAIL: ${{ secrets.GMAIL }}
+          GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+        run: python birthday_wisher.py
