@@ -3,8 +3,7 @@ import datetime
 import smtplib
 import os
 
-
-# Load environment variables from .env
+# Load environment variables from GitHub Secrets
 GMAIL = os.getenv("GMAIL")
 GMAIL_PASSWORD = os.getenv("GMAIL_PASSWORD")
 
@@ -19,17 +18,22 @@ def send_email(to, subject, message):
     except Exception as e:
         print(f"❌ Failed to send to {to}. Reason: {e}")
 
+try:
+    df = pd.read_excel("data.xlsx")
+except Exception as e:
+    print(f"❌ Failed to read data.xlsx: {e}")
+    exit()
 
-df=pd.read_excel("data.xlsx")
+today = datetime.datetime.now().strftime("%d/%m")
 
+for _, item in df.iterrows():
+    if pd.isnull(item.get("Date")) or pd.isnull(item.get("gmail")):
+        continue
 
-
-today=datetime.datetime.now().strftime("%d/%m")
-
-for index,item in df.iterrows():
-
-    bday=item["Date"].strftime("%d/%m")
-    
-
-    if(today==bday):
-        send_email(item["gmail"],"Happy Birthday",item["Message"])
+    try:
+        bday = item["Date"].strftime("%d/%m")
+        if today == bday:
+            message = item.get("Message", "Wishing you a wonderful birthday! 🎉")
+            send_email(item["gmail"], "🎉 Happy Birthday!", message)
+    except Exception as e:
+        print(f"⚠️ Error processing row: {e}")
