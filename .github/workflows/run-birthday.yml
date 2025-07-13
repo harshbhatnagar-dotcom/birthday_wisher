@@ -2,15 +2,15 @@ name: Send Birthday Emails
 
 on:
   schedule:
-    - cron: '31 6 * * *'  # 12:00 AM IST (UTC+5:30 = 18:30 UTC)
-  workflow_dispatch:
+    - cron: '31 6 * * *'   # Runs every day at 12:01 PM IST (UTC 6:31)
+  workflow_dispatch:        # Allows manual runs
 
 jobs:
   send-emails:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up Python
@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Download data.xlsx from Google Drive
+      - name: Download Excel file from Google Drive
         env:
           GDRIVE_KEY: ${{ secrets.GDRIVE_KEY }}
         run: python download_file.py
@@ -30,4 +30,4 @@ jobs:
         env:
           GMAIL: ${{ secrets.GMAIL }}
           GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
-        run: main.py
+        run: python main.py
