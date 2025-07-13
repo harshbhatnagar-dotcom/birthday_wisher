@@ -2,8 +2,8 @@ name: Send Birthday Emails
 
 on:
   schedule:
-    - cron: '31 6 * * *'   # Runs every day at 12:01 PM IST (UTC 6:31)
-  workflow_dispatch:        # Allows manual runs
+    - cron: '31 6 * * *'   # Runs daily at 12:01 PM IST (06:31 UTC)
+  workflow_dispatch:        # Allows manual trigger via GitHub
 
 jobs:
   send-emails:
