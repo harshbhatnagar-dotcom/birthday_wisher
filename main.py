@@ -29,6 +29,7 @@ except Exception as e:
     
 india_tz = pytz.timezone("Asia/Kolkata")
 today = datetime.datetime.now(india_tz).strftime("%d/%m")
+print("Script started at (IST):", datetime.now(india_tz).strftime("%Y-%m-%d %H:%M:%S"))
 
 for _, item in df.iterrows():
     if pd.isnull(item.get("Date")) or pd.isnull(item.get("gmail")):
