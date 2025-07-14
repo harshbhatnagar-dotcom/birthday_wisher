@@ -32,6 +32,7 @@ for _, item in df.iterrows():
 
     try:
         bday = item["Date"].strftime("%d/%m")
+        print(bday)
         if today == bday:
             message = item.get("Message", "Wishing you a wonderful birthday! ")
             send_email(item["gmail"], " Happy Birthday!", message)
