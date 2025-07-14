@@ -3,6 +3,9 @@ import datetime
 import smtplib
 import os
 
+import pytz
+india_tz = pytz.timezone("Asia/Kolkata")
+
 # Load environment variables from GitHub Secrets
 GMAIL = os.getenv("GMAIL")
 GMAIL_PASSWORD = os.getenv("GMAIL_PASSWORD")
@@ -23,8 +26,9 @@ try:
 except Exception as e:
     print(f" Failed to read data.xlsx: {e}")
     exit()
-
-today = datetime.datetime.now().strftime("%d/%m")
+    
+india_tz = pytz.timezone("Asia/Kolkata")
+today = datetime.datetime.now(india_tz).strftime("%d/%m")
 
 for _, item in df.iterrows():
     if pd.isnull(item.get("Date")) or pd.isnull(item.get("gmail")):
